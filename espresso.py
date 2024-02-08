@@ -15,8 +15,8 @@ def extract_latest_energy_and_cpu_time(file):
         if "convergence has been achieved" in line:
             convergence = line.strip()
     
-    total_energy = total_energy_line.split('=')[1].strip() if total_energy_line else None
-    cpu_time = cpu_time_line.split('=')[1].strip() if cpu_time_line else None
+    total_energy = total_energy_line.split('=')[1].strip().split("Ry")[0].strip() if total_energy_line else None
+    cpu_time = cpu_time_line.split('is')[1].strip() if cpu_time_line else None
     convergence = convergence if convergence else None
     
     return total_energy, cpu_time, convergence
@@ -43,9 +43,9 @@ def run_pwscf(
                 energy_diff = abs(float(current_energy) - float(total_energy))
                 current_energy = total_energy
                 print(
-                    f"""Total Energy: {total_energy}
-                    Energy Difference: {energy_diff}
-                    CPU Time: {cpu_time}""",
+                    f"""Total Energy: {total_energy} Ry
+                    Energy Difference: {energy_diff} Ry
+                    CPU Time: {cpu_time} seconds""",
                     end="\r"
                 )
             # Sleep a bit before checking again

@@ -79,7 +79,7 @@ scf_params = {
     'electrons': {
         'diagonalization': 'david',
         'mixing_beta': 0.4,
-        'conv_thr': 1e-8,
+        'conv_thr': 1e-6,
     },
     'kpts': tuple([k_pts for _ in range(3)]),
     'parallel': 'all',
