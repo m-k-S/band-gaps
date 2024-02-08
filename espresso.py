@@ -1,6 +1,5 @@
 import subprocess
 import time
-from knockknock import telegram_sender
 from config import bandgapConfig
 
 def extract_latest_energy_and_cpu_time(file):
@@ -9,7 +8,7 @@ def extract_latest_energy_and_cpu_time(file):
     convergence = None
 
     for line in file:
-        if "total energy" in line:
+        if "total energy" in line and "Ry" in line:
             total_energy_line = line.strip()
         if "total cpu time spent up to now is" in line:
             cpu_time_line = line.strip()
@@ -22,7 +21,6 @@ def extract_latest_energy_and_cpu_time(file):
     
     return total_energy, cpu_time, convergence
 
-@telegram_sender(token=bandgapConfig.TELEGRAM_API_KEY, chat_id=bandgapConfig.TELEGRAM_CHAT_ID)
 def run_pwscf(
         num_cores,
         rundir,
